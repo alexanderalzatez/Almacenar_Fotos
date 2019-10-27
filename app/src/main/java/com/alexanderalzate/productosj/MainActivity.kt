@@ -31,9 +31,19 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+
     private val REQUEST_IMAGE_CAPTURE: Int = 1
     private val PERMISSION_CODE = 1000
     private var selectedPhoto:Uri?=null
+    private var imgURL = ""
+
+    private var nombre=""
+    private var descripcion=""
+    private var precio = ""
+    private var categoria = ""
+    private var flagimagen = false
+    private var fromGallery = false
+    private var cargoURL = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +65,7 @@ class MainActivity : AppCompatActivity() {
                //System < Marshmallow
                openCamara()
            }
-            val database = FirebaseDatabase.getInstance()
-            val myRef = database.getReference("message")
 
-            myRef.setValue("Hello, World!")
         }
 
         bnGaleria.setOnClickListener {
@@ -68,8 +75,28 @@ class MainActivity : AppCompatActivity() {
         }
 
         bnEnviar.setOnClickListener {
-            uploadImageToFireBaseStorage()
-            saveImageFromTakedPhoto()
+
+            nombre= etNombre.text.toString()
+            descripcion=etDescripcion.text.toString()
+            precio = etPrecio.text.toString()
+            categoria = etCategoria.text.toString()
+
+            if(!nombre.isEmpty() && !descripcion.isEmpty() && !precio.isEmpty() && !categoria.isEmpty()){
+                if(flagimagen==true) {
+                    if(fromGallery){
+                        uploadImageToFireBaseStorage()
+                        fromGallery=false
+                    }
+                    else{
+                        saveImageFromTakedPhoto()
+                    }
+                    flagimagen = false
+                }else{
+                    Toast.makeText(this,"ingresa una imagen",Toast.LENGTH_SHORT).show()
+                }
+            }else{
+                Toast.makeText(this,"Uno o más campos están vacíos",Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
@@ -102,11 +129,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data!=null) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             Log.e("MainActivity Bitmap",imageBitmap.toString())
             image_view.setImageBitmap(imageBitmap)
-
+            flagimagen=true
         }
         if(requestCode == 0 && resultCode== Activity.RESULT_OK && data!=null){
             Log.e("MainActivity fotoSele","Foto seleccionada")
@@ -115,6 +142,8 @@ class MainActivity : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,selectedPhoto)
             Log.e("MainActivity","bitmap: $bitmap")
             image_view.setImageBitmap(bitmap)
+            flagimagen=true
+            fromGallery = true
         }
     }
 
@@ -127,6 +156,14 @@ class MainActivity : AppCompatActivity() {
             Log.e("MainActivity upload","imagen cargada exitosamente ${it.metadata?.path}")
             ref.downloadUrl.addOnSuccessListener {
                 Log.e("MainActivity","Ubicación de archivo: $it")
+                imgURL = it.toString()
+                Log.e("MainActivity","imgURL: $imgURL")
+                Log.e("MainActivity","nombre:  $nombre")
+
+                val database = FirebaseDatabase.getInstance()
+                val myRef = database.getReference("producto")
+                var productos = Producto(nombre,descripcion,precio,categoria,imgURL)
+                myRef.child(nombre).setValue(productos)
             }
         }
 
@@ -162,6 +199,14 @@ class MainActivity : AppCompatActivity() {
                     val downloadUri = task.result
                     Log.e("MainActivity","URL desde take photo:  ${downloadUri.toString()}")
                     Log.e("MainActivity","file:  $filename")
+
+                    imgURL = downloadUri.toString()
+                    Log.e("MainActivity","imgURL desde takedphoto:  $imgURL")
+                    val database = FirebaseDatabase.getInstance()
+                    val myRef = database.getReference("producto")
+                    var productos = Producto(nombre,descripcion,precio,categoria,imgURL)
+                    myRef.child(nombre).setValue(productos)
+
                 }
         }
     }

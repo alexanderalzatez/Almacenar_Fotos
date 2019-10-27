@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">ProductosJ</string>
     <string name="tomar_foto">Tomar foto</string>
+    <string name="descripci_n">Descripción:</string>
+    <string name="precio">Precio:</string>
+    <string name="nombre">Nombre:</string>
+    <string name="categor_a">Categoría:</string>
+    <string name="imagen">Imagen</string>
 </resources>
