@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        bnCapture.setOnClickListener {
+        image_view.setOnClickListener {
 
            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                if(checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
@@ -164,6 +164,8 @@ class MainActivity : AppCompatActivity() {
                 val myRef = database.getReference("producto")
                 var productos = Producto(nombre,descripcion,precio,categoria,imgURL)
                 myRef.child(nombre).setValue(productos)
+
+                Toast.makeText(this,"Información subida exitosamente a la base de datos",Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -206,7 +208,7 @@ class MainActivity : AppCompatActivity() {
                     val myRef = database.getReference("producto")
                     var productos = Producto(nombre,descripcion,precio,categoria,imgURL)
                     myRef.child(nombre).setValue(productos)
-
+                    Toast.makeText(this,"Información subida exitosamente a la base de datos",Toast.LENGTH_SHORT).show()
                 }
         }
     }

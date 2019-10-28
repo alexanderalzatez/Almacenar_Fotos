@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3"
+            android:layout_weight="1"
             android:layout_margin="5dp">
 
             <TextView
@@ -36,10 +36,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="textEnd"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:text="@string/nombre"/>
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/etNombre"
                 android:layout_weight="2"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3"
+            android:layout_weight="1"
             android:layout_margin="5dp">
 
             <TextView
@@ -59,10 +59,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="textEnd"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:text="@string/descripci_n"/>
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:id="@+id/etDescripcion"
@@ -74,18 +74,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3"
+            android:layout_weight="1"
             android:layout_margin="5dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="@string/precio"
                 android:textAlignment="textEnd"
-                android:textSize="18sp"
-                android:text="@string/precio"/>
+                android:textSize="14sp" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/etPrecio"
                 android:layout_weight="2"
@@ -105,10 +105,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textAlignment="textEnd"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:text="@string/categor_a"/>
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/etCategoria"
                 android:layout_weight="2"
@@ -128,9 +128,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
             android:id="@+id/image_view"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/ic_add_a_photo_black_24dp"/>
 
         <LinearLayout
@@ -140,28 +141,23 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/bnCapture"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/botonesstyle"
-                android:text="@string/tomar_foto"
-                android:layout_marginRight="10dp"
-                android:textColor="@drawable/txt_botonesstyle" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/bnGaleria"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/botonesstyle"
-                android:textColor="@drawable/txt_botonesstyle"
-                android:text="Galería"/>
+                android:drawableRight="@drawable/ic_photo_camera_black_24dp"
+                android:paddingRight="5dp"
+                android:text="Galería"
+                android:textAllCaps="false"
+                android:textColor="@drawable/txt_botonesstyle" />
         </LinearLayout>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bnEnviar"
             android:background="@drawable/botonesstyle"
             android:textColor="@drawable/txt_botonesstyle"
-            android:layout_marginTop="16dp"
+            android:layout_margin="16dp"
             android:text="Enviar"/>
 
     </LinearLayout>
